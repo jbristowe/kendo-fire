@@ -13,69 +13,25 @@ var __meta__ = {
 
   "use strict";
 
-  var isArray = $.isArray;
-  kendo.Firebase = kendo.Firebase || {};
-
-  kendo.Firebase.DataSource = kendo.data.DataSource.extend({
-    pushCreate: function(items) {
-      if (!isArray(items)) {
-        items = [items];
-      }
-
-      for (var idx = 0; idx < items.length; idx ++) {
-      };
-
-      var pushed = [];
-      var autoSync = this.options.autoSync;
-      this.options.autoSync = false;
-
-      try {
-        for (var idx = 0; idx < items.length; idx ++) {
-          var item = items[idx];
-
-          if (this.indexOf(item.id) === -1) {
-            continue;
-          }
-
-          var result = this.add(item);
-
-          pushed.push(result);
-
-          var pristine = result.toJSON();
-
-          if (this._isServerGrouped()) {
-            pristine = wrapInEmptyGroup(this.group(), pristine);
-          }
-
-          this._pristineData.push(pristine);
-        }
-      } finally {
-        this.options.autoSync = autoSync;
-      }
-
-      if (pushed.length) {
-        this.trigger("push", {
-          type: "create",
-          items: pushed
-        });
-      }
-    }
-  });
-
   kendo.data.transports.firebase = kendo.data.RemoteTransport.extend({
     create: function(options) {
       var data = this.parameterMap(options.data, "create");
       delete data.id;
-      var id = this.ref.push().name();
-      this.ref.child(id).set(data, function(error) {
-        if (!error) {
-          var result = data;
-          result.id = id;
-          options.success(result);
-        } else {
+
+      this.requestId = kendo.guid();
+
+      var fbRef = this.ref.push(data, function(error) {
+        if (error) {
           options.fail();
         }
       });
+
+      if (fbRef !== undefined) {
+        var result = data;
+        result.id = fbRef.name();
+        options.success(result);
+        delete this.requestId;
+      }
     },
 
     destroy: function(options) {
@@ -105,6 +61,9 @@ var __meta__ = {
 
     push: function(callbacks) {
       this.ref.on("child_added", function(childSnapshot, prevChildName) {
+        if (this.requestId !== undefined) {
+          return;
+        }
         var model = childSnapshot.val();
         model.id = childSnapshot.name();
         callbacks.pushUpdate(model);

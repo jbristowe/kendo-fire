@@ -3,6 +3,10 @@ kendo-fire
 
 **kendo-fire** is a set of [Kendo UI](http://www.telerik.com/kendo-ui) bindings for [Firebase](https://www.firebase.com/).
 
+# Demontration Video
+
+[![ScreenShot](https://i.ytimg.com/vi/FDXoAlYLDqo/maxresdefault.jpg)](http://youtu.be/FDXoAlYLDqo)
+
 # Usage
 
 ```html

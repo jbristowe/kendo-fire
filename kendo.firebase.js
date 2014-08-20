@@ -67,7 +67,7 @@ var __meta__ = {
         var model = childSnapshot.val();
         model.id = childSnapshot.name();
         callbacks.pushUpdate(model);
-      });
+      }, function() {}, this);
 
       this.ref.on("child_changed", function(childSnapshot, prevChildName) {
         var model = childSnapshot.val();

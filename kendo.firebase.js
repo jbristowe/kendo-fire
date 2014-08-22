@@ -1,26 +1,27 @@
-(function(f, define){
-    define([ "./kendo.data" ], f);
-})(function(){
+(function (f, define) {
+  define([ './kendo.data' ], f);
+})(function () {
+
+'use strict';
 
 var __meta__ = {
-    id: "data.firebase",
-    category: "data",
-    name: "Firebase",
-    depends: [ "data" ]
+  id: 'data.firebase',
+  category: 'data',
+  name: 'Firebase',
+  depends: [ 'data' ]
 };
 
-(function($) {
-
-  "use strict";
+(function ($, undefined) {
+  var kendo = window.kendo;
 
   kendo.data.transports.firebase = kendo.data.RemoteTransport.extend({
-    create: function(options) {
-      var data = this.parameterMap(options.data, "create");
+    create: function (options) {
+      var data = this.parameterMap(options.data, 'create');
       delete data.id;
 
       this.requestId = kendo.guid();
 
-      var fbRef = this.ref.push(data, function(error) {
+      var fbRef = this.ref.push(data, function (error) {
         if (error) {
           options.fail();
         }
@@ -34,9 +35,9 @@ var __meta__ = {
       }
     },
 
-    destroy: function(options) {
-      var data = this.parameterMap(options.data, "update");
-      this.ref.child(data.id).set(null, function(error) {
+    destroy: function (options) {
+      var data = this.parameterMap(options.data, 'update');
+      this.ref.child(data.id).set(null, function (error) {
         if (!error) {
           var result = data;
           result.id = data.id;
@@ -52,15 +53,15 @@ var __meta__ = {
 
       var url = firebase.url;
       if (!url) {
-        throw new Error('The "url" option must be set.');
+        throw new Error('The option, URL must be set.');
       }
 
       this.ref = new Firebase(url);
       kendo.data.RemoteTransport.fn.init.call(this, options);
     },
 
-    push: function(callbacks) {
-      this.ref.on("child_added", function(childSnapshot, prevChildName) {
+    push: function (callbacks) {
+      this.ref.on('child_added', function (childSnapshot, prevChildName) {
         if (this.requestId !== undefined) {
           return;
         }
@@ -69,19 +70,19 @@ var __meta__ = {
         callbacks.pushUpdate(model);
       }, function() {}, this);
 
-      this.ref.on("child_changed", function(childSnapshot, prevChildName) {
+      this.ref.on('child_changed', function (childSnapshot, prevChildName) {
         var model = childSnapshot.val();
         model.id = childSnapshot.name();
         callbacks.pushUpdate(model);
       });
 
-      this.ref.on("child_moved", function(childSnapshot, prevChildName) {
+      this.ref.on('child_moved', function (childSnapshot, prevChildName) {
         var model = childSnapshot.val();
         model.id = childSnapshot.name();
         callbacks.pushUpdate(model);
       });
 
-      this.ref.on("child_removed", function(oldChildSnapshot) {
+      this.ref.on('child_removed', function (oldChildSnapshot) {
         var model = oldChildSnapshot.val();
         model.id = oldChildSnapshot.name();
         callbacks.pushDestroy(model);
@@ -89,9 +90,9 @@ var __meta__ = {
     },
 
     read: function (options) {
-      this.ref.once("value", function(dataSnapshot) {
+      this.ref.once('value', function (dataSnapshot) {
         var data = [];
-        dataSnapshot.forEach(function(childSnapshot) {
+        dataSnapshot.forEach(function (childSnapshot) {
           var item = childSnapshot.val();
           item.id = childSnapshot.name();
           data.push(item);
@@ -100,9 +101,10 @@ var __meta__ = {
       });
     },
 
-    update: function(options) {
-      var id = options.data.id;
-      var data = this.parameterMap(options.data, "update");
+    update: function (options) {
+      var id = options.data.id,
+          data = this.parameterMap(options.data, 'update');
+
       delete data.id;
       this.ref.child(id).set(data, function(error) {
         if (!error) {
@@ -119,4 +121,4 @@ var __meta__ = {
 
 return window.kendo;
 
-}, typeof define == 'function' && define.amd ? define : function(_, f){ f(); });
+}, typeof define == 'function' && define.amd ? define : function (_, f) { f(); });

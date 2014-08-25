@@ -1,0 +1,26 @@
+{
+  "name": "kendo-fire",
+  "version": "0.1.0",
+  "dependencies": {
+    "kendo-ui": ">=2014.2.716",
+    "firebase": "1.0.x"
+  },
+  "homepage": "https://github.com/jbristowe/kendo-fire",
+  "authors": [
+    "John Bristowe <john@bristowe.com>"
+  ],
+  "description": "Kendo UI bindings for Firebase",
+  "main": "kendo.firebase.js",
+  "keywords": [
+    "kendo-ui",
+    "firebase"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

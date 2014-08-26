@@ -23,6 +23,12 @@ kendo-fire
 ```javascript
 var dataSource = new kendo.data.DataSource({
   autoSync: true, // recommended
+  schema: {
+    model: {
+      id: 'id'
+      ...
+    }
+  },
   transport: {
     firebase: {
       url: "[firebaseURL]"

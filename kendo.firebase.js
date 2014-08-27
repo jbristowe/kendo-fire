@@ -11,9 +11,7 @@ var __meta__ = {
   depends: [ 'data' ]
 };
 
-(function ($, undefined) {
-  var kendo = window.kendo;
-
+(function (kendo, undefined) {
   kendo.data.transports.firebase = kendo.data.RemoteTransport.extend({
     create: function (options) {
       var data = this.parameterMap(options.data, 'create');
@@ -117,7 +115,7 @@ var __meta__ = {
       });
     }
   });
-})(window.kendo.jQuery);
+})(window.kendo);
 
 return window.kendo;
 

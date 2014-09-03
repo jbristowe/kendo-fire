@@ -3,10 +3,6 @@ kendo-fire
 
 **kendo-fire** is a set of [Kendo UI](http://www.telerik.com/kendo-ui) bindings for [Firebase](https://www.firebase.com/).
 
-# Demo Video
-
-[![ScreenShot](https://i.ytimg.com/vi/FDXoAlYLDqo/maxresdefault.jpg)](http://youtu.be/FDXoAlYLDqo)
-
 # Usage
 
 Install kendo-fire along with its dependencies via [bower](http://bower.io/):
@@ -47,3 +43,7 @@ var dataSource = new kendo.data.DataSource({
   type: "firebase"
 });
 ```
+
+# Demo Video
+
+[![ScreenShot](https://i.ytimg.com/vi/FDXoAlYLDqo/maxresdefault.jpg)](http://youtu.be/FDXoAlYLDqo)

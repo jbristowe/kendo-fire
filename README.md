@@ -9,6 +9,14 @@ kendo-fire
 
 # Usage
 
+Install kendo-fire along with its dependencies via [bower](http://bower.io/):
+
+```bash
+$ bower install kendo-fire
+```
+
+Add references to your markup:
+
 ```html
 <!-- Kendo UI Core / Kendo UI Professional -->
 <script src="kendo.all.min.js"></script>
@@ -19,6 +27,8 @@ kendo-fire
 <!-- kendo-fire -->
 <script src="kendo.firebase.js"></script>
 ```
+
+Utilise the binding via a **kendo.data.DataSource**:
 
 ```javascript
 var dataSource = new kendo.data.DataSource({

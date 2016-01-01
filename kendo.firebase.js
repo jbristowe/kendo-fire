@@ -27,7 +27,7 @@ var __meta__ = {
 
       if (fbRef !== undefined) {
         var result = data;
-        result.id = fbRef.name();
+        result.id = fbRef.key();
         options.success(result);
         delete this.requestId;
       }
@@ -64,25 +64,25 @@ var __meta__ = {
           return;
         }
         var model = childSnapshot.val();
-        model.id = childSnapshot.name();
+        model.id = childSnapshot.key();
         callbacks.pushUpdate(model);
       }, function() {}, this);
 
       this.ref.on('child_changed', function (childSnapshot, prevChildName) {
         var model = childSnapshot.val();
-        model.id = childSnapshot.name();
+        model.id = childSnapshot.key();
         callbacks.pushUpdate(model);
       });
 
       this.ref.on('child_moved', function (childSnapshot, prevChildName) {
         var model = childSnapshot.val();
-        model.id = childSnapshot.name();
+        model.id = childSnapshot.key();
         callbacks.pushUpdate(model);
       });
 
       this.ref.on('child_removed', function (oldChildSnapshot) {
         var model = oldChildSnapshot.val();
-        model.id = oldChildSnapshot.name();
+        model.id = oldChildSnapshot.key();
         callbacks.pushDestroy(model);
       });
     },
@@ -92,7 +92,7 @@ var __meta__ = {
         var data = [];
         dataSnapshot.forEach(function (childSnapshot) {
           var item = childSnapshot.val();
-          item.id = childSnapshot.name();
+          item.id = childSnapshot.key();
           data.push(item);
         });
         options.success(data);
